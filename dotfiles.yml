@@ -34,18 +34,3 @@
     - role: golang
       tags:
         - golang
-    - role: ruby
-      tags:
-        - ruby
-    - role: erlang
-      tags:
-        - erlang
-    - role: elixir
-      tags:
-        - elixir
-    - role: node
-      tags:
-        - node
-    - role: redis
-      tags:
-        - redis
