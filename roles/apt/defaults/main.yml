@@ -5,6 +5,7 @@ packages:
   - curl
   - docker-compose
   - docker.io
+  - fzf
   - htop
   - jq
   - libbz2-dev
@@ -30,7 +31,6 @@ packages:
   - gnome-boxes
   - gnome-icon-theme
   - gnome-keyring
-  - gnome-tweak-tool
   - i3lock
 
 remove_packages:
