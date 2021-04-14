@@ -6,11 +6,8 @@ Configure linux workstation using Ansible.
 
 Languages are managed with [asdf](https://asdf-vm.com/#/).
 
-- Ruby
 - Golang
-- Nodejs
 - Python
-- Elixir
 - Terraform
 
 ### System
@@ -23,7 +20,7 @@ Languages are managed with [asdf](https://asdf-vm.com/#/).
 
 ### Services
 
-- redis
+- docker
 
 ### Packages
 
