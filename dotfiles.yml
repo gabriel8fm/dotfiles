@@ -1,0 +1,24 @@
+- name: Set up local workstation
+  hosts: local
+  roles:
+    - role: git
+      tags:
+        - git
+    - role: apt
+      tags:
+        - apt
+    - role: zsh
+      tags:
+        - zsh
+    - role: vim
+      tags:
+        - vim
+    - role: tmux
+      tags:
+        - tmux
+    - role: terraform
+      tags:
+        - terraform
+    - role: golang
+      tags:
+        - golang

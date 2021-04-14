@@ -1,0 +1,25 @@
+- name: Upgrade apt
+  apt: upgrade=yes
+  when: package_upgrade
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install apt packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  become: yes
+  become_user: root
+  become_method: sudo
+  loop: "{{ packages }}"
+
+- name: Remove apt packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: absent
+  become: yes
+  become_user: root
+  become_method: sudo
+  loop: "{{ remove_packages }}"
