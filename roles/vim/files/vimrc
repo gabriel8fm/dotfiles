@@ -1,0 +1,486 @@
+"vi: set noexpandtab :
+
+"========================================
+"========== Interface Visual    =========
+"========================================
+"language messages C
+"set background=dark
+syntax on
+"colorscheme default
+"colorscheme delek
+"colorscheme Tomorrow-Night-Eighties
+"colorscheme material
+"colorscheme solarized
+"colorscheme slate
+"colorscheme google
+
+"========================================
+"========== Customs    =========
+"========================================
+set ruler                     " show the line number on the bar
+set more                      " use more prompt
+set autoread                  " watch for file changes
+set number                    " line numbers
+set pastetoggle=<F2>
+set noautowrite               " don't automagically write on :next
+set lazyredraw                " don't redraw when don't have to
+set showmode
+set showcmd
+set nocompatible              " vim, not vi
+"set autoindent smartindent    " auto/smart indent
+set smarttab                  " tab and backspace are smart
+set tabstop=2                 " 6 spaces
+set shiftwidth=2
+set scrolloff=5               " keep at least 5 lines above/below
+set sidescrolloff=5           " keep at least 5 lines left/right
+set history=200
+set backspace=indent,eol,start
+set linebreak
+set cmdheight=2               " command line two lines high
+set undolevels=1000           " 1000 undos
+set updatecount=100           " switch every 100 chars
+set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
+set ttyfast                   " we have a fast terminal
+set noerrorbells              " No error bells please
+set shell=zsh
+"set fileformats=unix
+"set ff=unix
+filetype on                   " Enable filetype detection
+"filetype indent on            " Enable filetype-specific indenting
+filetype plugin on            " Enable filetype-specific plugins
+filetype plugin indent on
+set wildmode=longest:full
+set wildmenu                  " menu has tab completion
+let maplocalleader=','        " all my macros start with ,
+set laststatus=2
+"set ttymouse=xterm2
+"set mouse=a
+set ttimeoutlen=0
+
+"========================================
+"========== Command Line Helper =========
+"========================================
+set wildmode=list:longest
+set shellcmdflag=-lc
+"set clipboard=unnamedplus
+
+"========================================
+"========== Indentation Opitions ========
+"========================================
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set shiftround
+set expandtab
+
+"========================================
+"========== Search Settings     =========
+"========================================
+set incsearch                 " incremental search
+set ignorecase                " search ignoring case
+set hlsearch                  " highlight the search
+set showmatch                 " show matching bracket
+set diffopt=filler,iwhite     " ignore all whitespace and sync
+
+"========================================
+"========== Backup Settings     =========
+"========================================
+set backup
+set backupdir=~/.vim/backup
+set directory=~/.vim/tmp
+set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
+"set viminfo='100,f1
+
+"========================================
+"========== Insert Options      =========
+"========================================
+set fo=croql
+set textwidth=79
+"Active tab complete (use =0 to disable it)
+let g:tabcomplete = 1
+
+"========================================
+"========== Buffers Manipulation ========
+"========================================
+set hidden
+set bufhidden=hide
+
+"========================================
+"========== Shortcuts           =========
+"========================================
+"Toggle current and last buffer
+map <F2> <C-^>
+"Show all loaded buffers
+map <F3> :buffers<CR>
+"Show all registers stored
+map <F4> :registers<CR>
+"Use Ctags to find function/method/class defination
+map <F5> g<C-]>
+"Return to last tag search by <F5>
+map <F6> <C-T>
+"<F8> Open and close fold
+map <F8> za
+"Press <F9> to toggle color comment
+map <F9> :call ToggleCommentColor()<CR>
+"Press <F10> to toggle on and off highlight chars passing 80 on line
+map <F10> :call ToggleMatch80()<CR>
+"Press <F11> to toggle spell on and off
+map <F11> :call ToggleSpell()<CR>
+"Insert space on normal mode
+map <SPACE> i<SPACE><ESC>l
+
+"Running current test under cursor
+map  :exec '!APP_NAME=$( basename ${PWD} ) && cd .. && docker exec -it ${APP_NAME} bundle exec rspec ' . expand('%') . ':' . line('.')<CR>
+map <F7> :exec '!APP_NAME=$( basename ${PWD} ) && cd .. && docker exec -it ${APP_NAME} bundle exec rspec --default-path auto-test ' . expand('%') . ':' . line('.')<CR>
+map  :exec '!docker-compose run --rm api_test bundle exec rspec '  . expand('%') . ':' . line('.')<CR>
+"Open VCR file
+map  :exec ':split spec/vcr/' . matchlist(getline('.'), 'cassette_name: ''\([^'']*\)')[1] . '.yml'<CR>
+
+"========================================
+"========== Fold Settings       =========
+"========================================
+set foldenable
+set foldmethod=manual
+hi Folded ctermbg=0
+
+"========================================
+"========== ft=vim Settings     =========
+"========================================
+augroup vim_settings
+	au!
+	au BufEnter vimrc,.vimrc,*.vim let @h='i"0a=yppk0l10lv20lr lR'
+	au BufEnter vimrc,.vimrc map <F1> :help 
+augroup END
+
+"========================================
+"========== ft=python Settings  =========
+"========================================
+:command! CtagsPython !ctags --langdef=Python --recurse=yes --links=no --python-kinds=-i .
+augroup python_settings
+	au!
+	au FileType python let python_highlight_all=1
+	au FileType python setlocal cinwords=if,elif,else,while,for,class,def,try,except
+	au FileType python let @h='i#0a=yppk0l20lv20lr lR'
+	au Filetype python syntax match error_space display "\(^\t\+ \+\|^ \+\t\+\|\s\+$\)" | highlight def link error_space Error
+	au Filetype python let python_highlight_builtins = 1
+	au Filetype python let python_highlight_numbers = 1
+	"au BufEnter *.py setlocal foldmethod=indent
+	"syntax match py_keyword display "True"
+augroup END
+
+"========================================
+"========== ft=ruby Settings    =========
+"========================================
+:command! CtagsRuby !ctags --recurse=yes --links=no .
+augroup ruby_settings
+	au!
+	au BufEnter *.rb,*.rake setlocal cinwords=if,elsif,else,while,for,class,def,end filetype=ruby
+	au BufEnter *.rb,*.rake let @h='i#0a=yppk0l20lv20lr lR'
+	au BufEnter *.rb,*.rake map <buffer> K :!ri <cword><CR>
+	au BufEnter *.rb,*.rake setlocal iskeyword=@,48-57,_,192-255,?
+	au BufEnter *.rb,*.rake setlocal iskeyword=@,48-57,_,192-255,?
+	au BufEnter *.rb,*.rake setlocal tabstop=2
+	au BufEnter *.rb,*.rake setlocal shiftwidth=2
+    au BufEnter *.rb,*.rake setlocal expandtab
+	au BufEnter *.rb map <buffer>  :call SpecFile()<CR>
+augroup END
+
+"========================================
+"========== ft=yaml Settings    =========
+"========================================
+augroup yaml_settings
+	au!
+	au BufEnter *.yml let @h='i#0a=yppk0l20lv20lr lR'
+	au BufEnter *.yml setlocal tabstop=2
+	au BufEnter *.yml setlocal shiftwidth=2
+    au BufEnter *.yml setlocal expandtab
+augroup END
+au BufRead *.yml,*.yaml set filetype=yaml
+
+"========================================
+"========== ft=saltstack Settings  =========
+"========================================
+
+au BufRead *.sls set filetype=yaml
+let g:sls_use_jinja_syntax = 1 " Force using the Django template syntax file
+
+"========================================
+"========== ft=sh Settings  =========
+"========================================
+au BufRead *.sh set filetype=sh
+
+"========================================
+"========== ft=terraform Settings  =========
+"========================================
+augroup terraform_settings
+	au!
+    au BufRead,BufNewFile *.tf setlocal filetype=terraform
+    au BufRead,BufNewFile *.tfvars setlocal filetype=terraform
+    au BufRead,BufNewFile *.tfstate setlocal filetype=json
+    au BufRead,BufNewFile *.tfstate.backup setlocal filetype=json
+	au BufEnter *.tf setlocal tabstop=2
+	au BufEnter *.tf setlocal shiftwidth=2
+    au BufEnter *.tf setlocal expandtab
+augroup END
+
+"========================================
+"========== ft=javascript Settings    =========
+"========================================
+augroup javascript_settings
+	au!
+	au BufEnter *.js,*.jsx setlocal tabstop=2
+	au BufEnter *.js,*.jsx setlocal shiftwidth=2
+    au BufEnter *.js,*.jsx setlocal expandtab
+augroup END
+
+"========================================
+"========== ft=sablecc Settings =========
+"========================================
+augroup filetype_detect_sablecc
+	au!
+	au BufNewFile,BufRead *.sablecc setf sablecc
+augroup END
+
+"========================================
+"========== ft=Commit Settings  =========
+"========================================
+augroup commit_settings
+	au!
+	au BufEnter COMMIT_EDITMSG setlocal spell
+	au BufEnter COMMIT_EDITMSG let @c = "bugID: \nAuthor of Code: Roberto Miura Honji (roberto.honji@tray.net.br)"
+augroup END
+
+"========================================
+"========== ft=tags Settings    =========
+"========================================
+augroup tags_file
+	au!
+	au BufEnter tags set noexpandtab
+augroup END
+
+"========================================
+"========== Script Options      =========
+"========================================
+set noremap
+"Vagrant setup directory path
+let g:vagrant_path = "~/workspace/development-box/"
+
+"========================================
+"========== Vagrant Options     =========
+"========================================
+"This functions will ssh on vagrant machine and execute a command there.
+"You can configure using let g:vagrant_path the path to directory with Vagrantfile
+"This machine must be up (vagrant up).
+"how to use :Vagrant ls -al
+command! -complete=file -nargs=+ Vagrant execute '!cd ' . g:vagrant_path . '; vagrant ssh -c ' . "'" . <q-args> . "'"
+command! VagrantRestartServer execute ':Vagrant cd ~/' . join(split(getcwd(), '/')[-2:], '/') . '; touch tmp/restart.txt'
+
+"========================================
+"========== Func: ToggleCommentColor ====
+"========================================
+"This function will toggle comment color
+let g:comment_color_number=4
+function! ToggleCommentColor()
+	if g:comment_color_number == 4
+		hi Comment ctermfg=6
+		let g:comment_color_number=6
+	else
+		hi clear Comment
+		hi Comment ctermfg=4
+		let g:comment_color_number=4
+	endif
+endfunction
+
+"========================================
+"========== Func: ToggleSpell   =========
+"========================================
+"This function will toggle spell on and off
+let g:spellOn = 'False'
+function! ToggleSpell()
+	if g:spellOn == 'True'
+		set nospell
+		let g:spellOn = 'False'
+		echo 'Spell Off'
+	else
+		set spell
+		let g:spellOn = 'True'
+		echo 'Spell On'
+	endif
+endfunction
+
+"========================================
+"========== Func: ToggleMatch80 =========
+"========================================
+"This function will highlight each chars passing 80 on line
+hi ColorColumn term=reverse ctermfg=0 ctermbg=7
+let g:match80 = 'False'
+function! ToggleMatch80()
+	if g:match80 == 'True'
+		match none
+		let g:match80 = 'False'
+		echo 'Match +80 off'
+	else
+		match ColorColumn /\%>80v.\+/ 
+		let g:match80 = 'True'
+		echo 'Match +80 on'
+	endif
+endfunction
+
+"========================================
+"========== Func: Shell         =========
+"========================================
+"This function will read from stdout and display it on buffer/window inside vim
+command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+	botright new
+	setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+	setlocal nowrap
+	call setline(1,a:cmdline)
+	call setline(2,substitute(a:cmdline,'.','=','g'))
+	execute 'silent 2read !'.escape(a:cmdline,'%#')
+	setlocal nomodifiable
+	1
+endfunction
+
+"========================================
+"========== Func: Tab Complete ======
+"========================================
+"Use <TAB> to complete instead <C-P>
+"Use <C-X><C-I> to insert literal <TAB> char if needed
+"Use g:tabcomplete=1 to enable and g:tabcomplete=0 to disable
+if exists('g:tabcomplete') && g:tabcomplete == 1
+	inoremap <TAB> <C-R>=TabComplete()<CR>
+	inoremap <C-X><C-I> <TAB>
+
+	"Return the word before the cursor, uses spaces to delimitate
+	"Rem : <cword> is the word under or after the cursor
+	function! GetCurrentWord()
+		let c = col ('.')-1
+		let l = line('.')
+		let ll = getline(l)
+		let ll1 = strpart(ll,0,c)
+		let ll1 = matchstr(ll1,'\S*$')
+		if strlen(ll1) == 0
+			return ll1
+		else
+			let ll2 = strpart(ll,c,strlen(ll)-c+1)
+			let ll2 = strpart(ll2,0,match(ll2,'$\|\s'))
+			return ll1.ll2
+		endif
+	endfunction
+
+	"Function that decide if you want literal tab or complete function
+	function! TabComplete()
+		let len = strlen(GetCurrentWord())
+		if len == 0
+			return "\<TAB>"
+		else
+			return "\<C-P>"
+	endfunction
+endif
+
+"========================================
+"========== Func: GetNearestWord ========
+"========================================
+" Return the current word, uses spaces to delimitate
+function! GetNearestWord()
+	let c = col ('.')-1
+	let l = line('.')
+	let ll = getline(l)
+	let ll1 = strpart(ll,0,c)
+	let ll1 = matchstr(ll1,'\S*$')
+	let ll2 = strpart(ll,c,strlen(ll)-c+1)
+	let ll2 = strpart(ll2,0,match(ll2,'$\|\s'))
+	""echo ll1.ll2
+	return ll1.ll2
+endfunction
+
+"========================================
+"========== Func: GetPreviousWord =======
+"========================================
+" Extract the word before the cursor, 
+" use keyword definitions, skip latter spaces (see "bla word_accepted ")
+function! GetPreviousWord()
+	let lig = getline(line('.'))
+	let lig = strpart(lig,0,col('.')-1)
+	return matchstr(lig, '\<\k*\>\s*$')
+endfunction
+
+"========================================
+"========== Func: SpecFile ==============
+"========================================
+" Go to spec defination class or
+" spec file for this class file
+function! SpecFile()
+	let file_path = expand('%:p')
+    let to_file_path = ['']
+    if l:file_path =~ '.*_spec.rb$'
+        for f_name in split(l:file_path, '/')
+            if f_name =~ '_spec'
+                let f_name = split(f_name, '_spec')[0] . '.rb'
+                call add(l:to_file_path, f_name)
+                break
+            endif
+
+            if f_name =~ 'spec'
+                continue
+            endif
+
+            call add(l:to_file_path, f_name)
+        endfor
+
+        let to_file_path = join(l:to_file_path, '/')
+    else
+        for f_name in split(l:file_path, '/')
+            if f_name == 'app' || f_name == 'lib'
+                call add(l:to_file_path, 'spec')
+            endif
+
+            if f_name =~ '.rb'
+                let f_name = split(f_name, '.rb')[0] . '_spec'
+            endif
+
+            call add(l:to_file_path, f_name)
+        endfor
+
+        let to_file_path = join(l:to_file_path, '/')
+        if ! isdirectory(l:to_file_path)
+            let to_file_path = to_file_path . '.rb'
+        endif
+    endif
+
+    execute 'edit' l:to_file_path
+    return 1
+endfunction
+
+"========================================
+"========== Func: ResumoSyntax  =========
+"========================================
+"This functions will create syntax highlight for resumo.txt file
+"au BufReadPost,FileReadPost,BufNewFile resumo.txt,*.fis,wireless.txt call Resumo()
+"function! Resumo()
+"	syntax match r_variavel   display "^\..*:"
+"	syntax match r_topico     display "^:.*:"
+"	syntax match r_comentario display "#.*"
+"	highlight def link r_comentario Comment
+"	highlight r_variavel term=bold ctermfg=1
+"	highlight r_topico   term=bold ctermfg=3
+"endfunction
+
+"========================================
+"========== Plugins             =========
+"========================================
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'moby/moby' , {'rtp': '/contrib/syntax/vim/'}
+Plug 'https://github.com/wincent/command-t.git'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'hashivim/vim-terraform'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'dracula/vim', { 'as': 'dracula' }
+call plug#end()
+
+colorscheme dracula

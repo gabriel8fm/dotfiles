@@ -1,0 +1,6 @@
+snaps:
+- kubectl
+- mailspring
+- slack
+- spotify
+- vscode
