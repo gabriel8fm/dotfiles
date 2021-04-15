@@ -64,7 +64,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # zsh tmux settings
-ZSH_TMUX_AUTOSTART="true"
+#ZSH_TMUX_AUTOSTART="true"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
