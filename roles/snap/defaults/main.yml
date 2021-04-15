@@ -1,6 +1,8 @@
 snaps:
+- code
+- http
+- kontena-lens
 - kubectl
 - mailspring
 - slack
 - spotify
-- vscode

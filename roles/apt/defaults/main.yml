@@ -6,20 +6,14 @@ packages:
   - docker-compose
   - docker.io
   - fzf
+  - gdebi
+  - guake
   - htop
   - jq
-  - libbz2-dev
-  - libffi-dev
-  - libffi-dev
-  - liblzma-dev
-  - liblzma-dev
-  - libncurses5-dev
-  - libreadline-dev
-  - libsqlite3-dev
-  - libssl-dev
   - llvm
   - make
-  - python-openssl
+  - snapd
+  - terminator
   - tk-dev
   - wget
   - xz-utils
@@ -27,7 +21,9 @@ packages:
   - ripgrep
 
   # GUI
-  - chromium-browser
+  - chromium
+  - chrome-gnome-shell
+  - flameshot
   - gnome-boxes
   - gnome-icon-theme
   - gnome-keyring

@@ -22,15 +22,3 @@
     - role: tmux
       tags:
         - tmux
-    - role: asdf
-      tags:
-        - asdf
-    - role: python
-      tags:
-        - python
-    - role: terraform
-      tags:
-        - terraform
-    - role: golang
-      tags:
-        - golang

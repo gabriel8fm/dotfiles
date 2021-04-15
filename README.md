@@ -2,14 +2,6 @@
 
 Configure linux workstation using Ansible.
 
-### Languages
-
-Languages are managed with [asdf](https://asdf-vm.com/#/).
-
-- Golang
-- Python
-- Terraform
-
 ### System
 
 - fzf
@@ -21,6 +13,7 @@ Languages are managed with [asdf](https://asdf-vm.com/#/).
 ### Services
 
 - docker
+- kubectl
 
 ### Packages
 
@@ -32,7 +25,7 @@ Languages are managed with [asdf](https://asdf-vm.com/#/).
 Firt setup installation run the dot-bootstrap command.
 
 ```
-$ ./bin/dot-bootstrap
+$ sudo ./bin/dot-bootstrap
 ```
 
 After that you can run any scripts defined in the `$DOTFILES_PATH/bin`
