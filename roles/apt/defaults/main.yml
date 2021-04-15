@@ -12,13 +12,14 @@ packages:
   - jq
   - llvm
   - make
+  - ripgrep
+  - rsync
   - snapd
   - terminator
   - tk-dev
   - wget
   - xz-utils
   - zlib1g-dev
-  - ripgrep
 
   # GUI
   - chromium
