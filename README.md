@@ -25,6 +25,8 @@ Configure Debian Testing workstation using Ansible.
 Firt setup installation run the dot-bootstrap command.
 
 ```
+$ git clone https://github.com/gabriel8fm/dotfiles.git ~/.dotfiles
+$ cd ~/.dotfiles
 $ sudo ./bin/dot-bootstrap
 ```
 
