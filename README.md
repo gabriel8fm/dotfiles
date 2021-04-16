@@ -1,6 +1,6 @@
 # My dotfiles
 
-Configure linux workstation using Ansible.
+Configure Debian Testing workstation using Ansible.
 
 ### System
 
