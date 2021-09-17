@@ -62,3 +62,4 @@ After that you can run any scripts defined in the `$DOTFILES_PATH/bin`
 ```
 $ dot-bootstrap
 ```
+
